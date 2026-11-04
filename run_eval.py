@@ -15,8 +15,6 @@ from pathlib import Path
 import yaml
 from dotenv import load_dotenv
 
-from checks import check, describe, is_complete
-
 # eval/ lives inside your project. PROJECT_ROOT is your project.
 EVAL_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = EVAL_DIR.parent
@@ -24,12 +22,13 @@ PROJECT_ROOT = EVAL_DIR.parent
 sys.path.insert(1, str(PROJECT_ROOT))
 load_dotenv(PROJECT_ROOT / ".env")
 
-# This import must come after load_dotenv because your bot may create its
-# clients at import time, and those read their keys from the environment.
-from connect import ask_bot  # noqa: E402
-
 
 def main() -> None:
+    # These imports must come after load_dotenv because your bot may create its
+    # clients at import time, and those read their keys from the environment.
+    from checks import check, describe, is_complete
+    from connect import ask_bot
+
     gt_path = EVAL_DIR / "ground_truth.yaml"
     with gt_path.open(encoding="utf-8") as f:
         data = yaml.safe_load(f)
@@ -74,7 +73,7 @@ def main() -> None:
                     f"ask_bot must return text, got {type(answer).__name__}"
                 )
             passed = check(entry, answer)
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001
             # the unfilled stub raises on its first call. Later, it is the bot's own error.
             if i == 1 and isinstance(exc, NotImplementedError):
                 print(f"Not connected: {exc}")
