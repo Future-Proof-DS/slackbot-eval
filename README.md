@@ -26,10 +26,11 @@ From inside your project:
 
 ```bash
 git clone https://github.com/Future-Proof-DS/slackbot-eval.git eval
+rm -rf eval/.git
 poetry add pyyaml python-dotenv
 ```
 
-That creates an `eval/` folder inside your project and adds the two extra dependencies the kit needs.
+That creates an `eval/` folder inside your project, removes the kit's Git history so the folder commits with your own repo, and adds the two extra dependencies the kit needs.
 
 ## Connecting your bot
 
