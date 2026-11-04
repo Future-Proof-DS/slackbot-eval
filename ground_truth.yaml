@@ -22,6 +22,9 @@
 #
 # Questions with empty `text`, or missing the fields for their kind, are skipped
 # at eval time.
+#
+# If a correct answer fails, the check may be too strict: widen `tolerance` for a
+# rounded number, or add your bot's wording to DECLINE_PHRASES in checks.py.
 
 questions:
   # ----- 5 EXAMPLES (pre-filled) -----
